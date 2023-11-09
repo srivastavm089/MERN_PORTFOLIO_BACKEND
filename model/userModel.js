@@ -13,11 +13,11 @@ const userSchema = new mongoose.Schema({
     required: [true, "Enter Your Password"],
     select: false,
   },
-  timline: [
+  timeline: [
     {
       title: String,
       description: String,
-      data: Date,
+      date: Date,
     },
   ],
   skills: {
