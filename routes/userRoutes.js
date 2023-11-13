@@ -10,8 +10,8 @@ userRouter.route("/me").get(isAuthenticated, myProfile);
 userRouter.route("/message").post(contact);
 userRouter.route("/admin/update").put(isAuthenticated, update);
 userRouter.route("/admin/timeline/add").post(isAuthenticated, addTimeLine);
-userRouter.route("/admin/project/add").post(isAuthenticated, addProject);
 userRouter.route("/admin/timline/:id").delete(isAuthenticated,deleteTimeLine)
+userRouter.route("/admin/project/add").post(isAuthenticated, addProject);
 userRouter.route("/admin/project/:id").delete(isAuthenticated,deleteProject)
 
 

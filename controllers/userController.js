@@ -1,5 +1,5 @@
 const { error } = require("console");
-const cloudinary = require("cloudinary")
+const cloudinary = require("cloudinary");
 const { sendMail } = require("../middleware/sendMail");
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");
@@ -185,15 +185,13 @@ exports.update = async (req, res) => {
       if (about.quote) user.about.quote = about.quote;
 
       if (about.avatar) {
-
-
         await cloudinary.v2.uploader.destroy(user.about.avatar.public_id);
-        const {avatar} = about;
-        console.log("right here")
+        const { avatar } = about;
+        console.log("right here");
         const myCloud = await cloudinary.v2.uploader.upload(avatar, {
           folder: "portfolio",
-        })
-        console.log(myCloud.public_id)
+        });
+        console.log(myCloud.public_id);
 
         user.about.avatar = {
           public_id: myCloud.public_id,
@@ -215,11 +213,9 @@ exports.update = async (req, res) => {
   }
 };
 exports.addTimeLine = async (req, res) => {
-
   try {
-    
     const { title, description, date } = req.body;
-
+    console.log(date)
     const user = await User.findById(req.user._id);
 
     user.timeline.unshift({
@@ -232,7 +228,6 @@ exports.addTimeLine = async (req, res) => {
       success: true,
       message: "added to timeline",
     });
-
   } catch (error) {
     return res.status(400).json({
       success: false,
@@ -241,7 +236,7 @@ exports.addTimeLine = async (req, res) => {
   }
 };
 exports.addProject = async (req, res) => {
-   console.log(req.body)
+  console.log(req.body);
   try {
     const { url, title, image, description, techStack } = req.body;
 
@@ -273,20 +268,17 @@ exports.addProject = async (req, res) => {
   }
 };
 exports.deleteTimeLine = async (req, res) => {
-     let result = req.params.id.split(':');
-     
-    
-  try {
-    const id = parseInt(result[1]);
+  const { id } = req.params;
 
+  try {
     let user = await User.findById(req.user._id);
-    
-     user.timeline = user.timeline.filter((item, index) => {
-                  return index!==id
+
+    user.timeline = user.timeline.filter((item) => {
+      return item._id != id;
     });
-    
+
     await user.save();
-  
+
     res.status(200).json({
       success: true,
       message: "Deleted from timeline",
@@ -299,17 +291,23 @@ exports.deleteTimeLine = async (req, res) => {
   }
 };
 exports.deleteProject = async (req, res) => {
+  console.log("delete Project");
   try {
     const { id } = req.params;
+
     const user = await User.findById(req.user._id);
-    const project = user.projects.filter((item) => item._id === id);
-    await cloudinary.v2.uploader.destroy(project.image.public_id);
-    user.projects = user.projects.filter((item) => item._id !== id);
+    console.log(id);
+    const project = user.projects.filter((item) => item._id == id);
+    console.log(project);
+    await cloudinary.v2.uploader.destroy(project[0].image.public_id);
+    user.projects = user.projects.filter((item) => {
+      return item._id != id;
+    });
 
     await user.save();
     res.status(200).json({
       success: true,
-      message: "Deleted from timeline",
+      message: "Deleted from projects",
     });
   } catch (error) {
     return res.status(400).json({

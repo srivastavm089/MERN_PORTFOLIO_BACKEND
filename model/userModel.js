@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     {
       title: String,
       description: String,
-      date: Date,
+      date:String,
     },
   ],
   skills: {
