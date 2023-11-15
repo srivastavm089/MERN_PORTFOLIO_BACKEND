@@ -100,7 +100,6 @@ exports.contact = async (req, res) => {
 };
 exports.update = async (req, res) => {
   try {
-    console.log("starting");
     const user = await User.findById(req.user._id);
 
     const { name, email, password, skills, about } = req.body;
@@ -187,11 +186,10 @@ exports.update = async (req, res) => {
       if (about.avatar) {
         await cloudinary.v2.uploader.destroy(user.about.avatar.public_id);
         const { avatar } = about;
-        console.log("right here");
+
         const myCloud = await cloudinary.v2.uploader.upload(avatar, {
           folder: "portfolio",
         });
-        console.log(myCloud.public_id);
 
         user.about.avatar = {
           public_id: myCloud.public_id,
@@ -199,7 +197,7 @@ exports.update = async (req, res) => {
         };
       }
     }
-    console.log("finish");
+
     await user.save();
     res.status(200).json({
       success: true,
@@ -215,7 +213,7 @@ exports.update = async (req, res) => {
 exports.addTimeLine = async (req, res) => {
   try {
     const { title, description, date } = req.body;
-    console.log(date)
+
     const user = await User.findById(req.user._id);
 
     user.timeline.unshift({
@@ -236,7 +234,6 @@ exports.addTimeLine = async (req, res) => {
   }
 };
 exports.addProject = async (req, res) => {
-  console.log(req.body);
   try {
     const { url, title, image, description, techStack } = req.body;
 
@@ -291,14 +288,13 @@ exports.deleteTimeLine = async (req, res) => {
   }
 };
 exports.deleteProject = async (req, res) => {
-  console.log("delete Project");
   try {
     const { id } = req.params;
 
     const user = await User.findById(req.user._id);
-    console.log(id);
+
     const project = user.projects.filter((item) => item._id == id);
-    console.log(project);
+
     await cloudinary.v2.uploader.destroy(project[0].image.public_id);
     user.projects = user.projects.filter((item) => {
       return item._id != id;

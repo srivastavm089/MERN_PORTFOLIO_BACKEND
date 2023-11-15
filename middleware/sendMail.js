@@ -17,8 +17,8 @@ exports.sendMail = async (text) => {
 
       text,
     });
-    console.log("completed");
+  
   } catch (error) {
-    console.log("something", error);
+      console.warn(error)
   }
 };

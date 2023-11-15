@@ -13,5 +13,5 @@ connectDataBase();
 
 
 app.listen(process.env.PORT, () => {
-  console.log(`server is runnning on ${process.env.PORT}`);
+  console.warn(`server is runnning on ${process.env.PORT}`);
 });
