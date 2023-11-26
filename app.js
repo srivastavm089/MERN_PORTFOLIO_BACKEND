@@ -12,14 +12,11 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 
 app.use(cookieParser());
 app.use("/api/v1", myRoute);
-app.use(cors({
 
-    methods:["GET", "POST", "PUT", "DELETE"],
-    credentials:true
-
-}))
-app.use('/api', createProxyMiddleware({ target: 'https://portolfio-0jv8.onrender.com', changeOrigin: true }));
-
+app.use('/api', createProxyMiddleware({
+    target: ['http://localhost:3000', 'https://portolfio-0jv8.onrender.com'],
+    changeOrigin: true
+  }));
 
 
 module.exports = app;
