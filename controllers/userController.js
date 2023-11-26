@@ -26,6 +26,7 @@ exports.login = async (req, res) => {
     res.json({
       success: true,
       message: "Logged in Successfully ",
+      
     });
   } catch (error) {
     return res.status(400).json({
@@ -56,6 +57,7 @@ exports.logout = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findOne().select("-email -password");
+    console.log(user);
     res.status(200).json({
       success: true,
       user,
