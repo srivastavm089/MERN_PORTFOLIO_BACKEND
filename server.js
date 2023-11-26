@@ -12,6 +12,6 @@ v2.config({
 connectDataBase();
 
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 4001, () => {
   console.warn(`server is runnning on ${process.env.PORT}`);
 });
