@@ -19,6 +19,12 @@ app.use(cors({
 
 }))
 app.use('/api', createProxyMiddleware({ target: 'https://portolfio-0jv8.onrender.com', changeOrigin: true }));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3001'); // Replace with your actual frontend origin
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  });
 
 
 module.exports = app;
