@@ -19,8 +19,12 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
     res.status(200).cookie("token", token, {
+      domain: 'localhost',
+      path: '/',
+      sameSite: 'None',
       expires: new Date(Date.now() + 600000),
       httpOnly: true,
+    
       secure: true,
     });
     res.json({
