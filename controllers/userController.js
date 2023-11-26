@@ -19,18 +19,16 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
     res.status(200).cookie("token", token, {
-      domain: 'localhost',
-      path: '/',
-      sameSite: 'None',
       expires: new Date(Date.now() + 600000),
       httpOnly: true,
-    
+
       secure: true,
+      sameSite: 'None'
+      // Set to the correct domain
     });
     res.json({
       success: true,
       message: "Logged in Successfully ",
-      
     });
   } catch (error) {
     return res.status(400).json({
