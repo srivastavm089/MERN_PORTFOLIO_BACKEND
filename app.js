@@ -12,6 +12,7 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use(cookieParser());
 app.use("/api/v1", myRoute);
 app.use(cors({
+    origin:["http://127.0.0.1:3001/index.html"],
     methods:["GET", "POST", "PUT", "DELETE"],
     credentials:true
 
