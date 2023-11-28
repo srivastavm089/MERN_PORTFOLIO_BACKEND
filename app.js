@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const myRoute = require("./routes/userRoutes");
-const { createProxyMiddleware } = require("http-proxy-middleware");
+
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();

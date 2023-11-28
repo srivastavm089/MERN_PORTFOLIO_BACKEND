@@ -20,11 +20,14 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
     res.status(200).cookie("token", token, {
-      expires: new Date(Date.now() + 600000),
-      httpOnly: true,
-
+      domain: ".onrender.com",
+      path: "/",
       secure: true,
       sameSite: "None",
+
+      expires: new Date(Date.now() + 600000),
+      httpOnly: true,
+      domain:'localhost'
     });
     res.json({
       success: true,
@@ -38,8 +41,6 @@ exports.login = async (req, res) => {
   }
 };
 exports.logout = async (req, res) => {
-
-
   try {
     res.status(200).cookie("token", null, {
       expires: new Date(Date.now()),
