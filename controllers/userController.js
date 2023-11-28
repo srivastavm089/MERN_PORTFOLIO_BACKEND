@@ -4,6 +4,7 @@ const { sendMail } = require("../middleware/sendMail");
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 exports.login = async (req, res) => {
+  console.log(req.body, "working");
   try {
     const { email, password } = req.body;
 
@@ -23,8 +24,7 @@ exports.login = async (req, res) => {
       httpOnly: true,
 
       secure: true,
-      sameSite: 'None'
-      // Set to the correct domain
+      sameSite: "None",
     });
     res.json({
       success: true,
@@ -38,11 +38,11 @@ exports.login = async (req, res) => {
   }
 };
 exports.logout = async (req, res) => {
+
+
   try {
     res.status(200).cookie("token", null, {
       expires: new Date(Date.now()),
-      httpOnly: true,
-      secure: true,
     });
     res.json({
       success: true,
@@ -72,6 +72,7 @@ exports.getUser = async (req, res) => {
   }
 };
 exports.myProfile = async (req, res) => {
+  // console.log()
   try {
     const user = await User.findById(req.user._id);
 

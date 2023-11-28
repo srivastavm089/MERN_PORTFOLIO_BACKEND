@@ -1,5 +1,4 @@
-
-const app = require('./app')
+const app = require("./app");
 const dotenv = require("dotenv");
 
 const connectDataBase = require("./databse/database");
@@ -10,7 +9,6 @@ v2.config({
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
 });
-
 
 connectDataBase();
 
