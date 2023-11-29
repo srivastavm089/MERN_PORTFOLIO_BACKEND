@@ -1,10 +1,8 @@
-const { error } = require("console");
 const cloudinary = require("cloudinary");
 const { sendMail } = require("../middleware/sendMail");
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 exports.login = async (req, res) => {
-  console.log(req.body, "working");
   try {
     const { email, password } = req.body;
 
@@ -19,18 +17,10 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
-    res.status(200).cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-      domain:'localhost',
-      expires: new Date(Date.now() + 600000),
-    
-   
-    });
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Logged in Successfully ",
+      token,
     });
   } catch (error) {
     return res.status(400).json({
@@ -59,7 +49,7 @@ exports.logout = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findOne().select("-email -password");
-    console.log(user);
+
     res.status(200).json({
       success: true,
       user,
@@ -72,7 +62,6 @@ exports.getUser = async (req, res) => {
   }
 };
 exports.myProfile = async (req, res) => {
-  // console.log()
   try {
     const user = await User.findById(req.user._id);
 
