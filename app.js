@@ -9,7 +9,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: "https://mern-portfolio-mu.vercel.app/",
+    origin: "http://localhost:3000",
   })
 );
 app.use(cookieParser());
